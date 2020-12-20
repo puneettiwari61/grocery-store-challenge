@@ -1,12 +1,18 @@
+require_relative 'item'
+
 module ItemsPrice
 
 
     def calculate_price
-        items_hash  =  @items.inject(Hash.new(0)) do |a,c|       
-            a[c] = a[c] + 1
-            a
-            end
+        items = @items.uniq.map { |item|  create_item(item)}
     end
+
+    def create_item(name)
+       quantity = @items.count(name)
+       new_item = Item.new(name, quantity)
+    end
+
+
 
     def get_sale_price(x,y) 
         case x

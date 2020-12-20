@@ -11,19 +11,20 @@ class  PriceCalculator
         @total_actual_price =0
     end
 
-    def show_invoice (x,y)
-        x = x.capitalize
-        puts sprintf '%6s %8s %15s', x,y,"$#{get_sale_price(x,y)}"
-        @total_sale_price +=  get_sale_price(x,y)
-        @total_actual_price += get_actual_price(x,y)
+    def show_invoice (item)
+        name = item.name.capitalize
+        quantity = item.quantity
+        puts sprintf '%6s %8s %15s', name,quantity,"$#{get_sale_price(name,quantity).round(2)}"
+        @total_sale_price +=  get_sale_price(name,quantity)
+        @total_actual_price += get_actual_price(name,quantity)
     end
+
 
 
     def total_cost 
         puts "\nItem        Quantity       Price"
         puts "----------------------------------------"
-
-        calculate_price.each { |x, y|  show_invoice(x,y)}
+        calculate_price.each { |item|  show_invoice(item)}
             
         puts "\nTotal price: $#{@total_sale_price.round(2)}"
         puts "You saved $#{(@total_actual_price - @total_sale_price).round(2)} today"
